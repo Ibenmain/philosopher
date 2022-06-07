@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utile.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/07 09:47:18 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/07 12:04:46 by ibenmain         ###   ########.fr       */
+/*   Created: 2022/06/07 10:48:05 by ibenmain          #+#    #+#             */
+/*   Updated: 2022/06/07 11:00:35 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
-{
-	t_info	*info;
 
-	if ((argc >= 5 && argc <= 6) || ft_cheak_error(argv))
-		printf("Invalid arguments");
-	info = malloc(sizeof(t_info));
-	if (!info)
-		return (0);
-	ft_param(argc, argv, info);
-	return (0);
+int	ft_atoi(char *str)
+{
+	int		i;
+	size_t	rst;
+
+	i = -1;
+	rst = 0;
+	while (str[++i])
+		rst = rst * 10 + (str[i] - 48);
+	return (rst);
 }
