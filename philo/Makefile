@@ -7,8 +7,6 @@ CFLAGS = -Wall -Wextra -Werror
 CC = cc
 RM = rm -rf
 
-
-
 all : $(NAME)
 
 $(NAME): $(OBJS)
