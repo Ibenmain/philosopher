@@ -6,11 +6,17 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 11:54:12 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/08 00:07:39 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/09 00:37:37 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_print_msg(void)
+{
+	printf("Invalid arguments");
+	exit(1);
+}
 
 int	ft_cheak_error(char **av)
 {
@@ -42,9 +48,9 @@ void	ft_param(int ac, char **av, t_info *info)
 	{
 		info->nb_eat = ft_atoi(av[5]);
 		if (info->nb_eat <= 0)
-			printf("Invalid arguments");
+			ft_print_msg();
 	}
 	if (info->nb_philo <= 0 || info->t_eat <= 0
 		|| info->t_sleep <= 0 || info->t_die <= 0)
-		printf("Invalid arguments");
+		ft_print_msg();
 }

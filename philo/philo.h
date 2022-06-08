@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:58:26 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/08 03:54:43 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/09 00:36:46 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ int				ft_eat(t_philo *philo);
 int				ft_fall_asleep(t_philo *philo);
 void			ft_param(int ac, char **av, t_info *info);
 void			ft_print(t_philo *philo, char *str);
+void			ft_print_msg(void);
 pthread_mutex_t	*ft_creat_fork(t_info *info);
 size_t			ft_get_time(void);
 void			ft_sleep(size_t ms);
 unsigned long	ft_get_ts(struct timeval ts);
 void			*routine(void *arg);
+void			join_philo(t_info *info);
 void			ft_get_forks(t_philo *philo, size_t index, pthread_mutex_t *forks, unsigned int nb_philo);
 void			ft_set_philo(t_philo *philos, t_info *info, pthread_mutex_t *print);
 int				ft_start_lunch(t_info *info, pthread_mutex_t *fork, pthread_mutex_t *print);

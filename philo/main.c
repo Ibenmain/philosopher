@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:47:18 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/08 01:21:02 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:44:02 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ int	main(int argc, char **argv)
 	forks = ft_creat_fork(&info);
 	pthread_mutex_init(&print, NULL);
 	ft_start_lunch(&info, forks, &print);
+	join_philo(&info);
 }

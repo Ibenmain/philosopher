@@ -6,11 +6,24 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 01:18:16 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/08 03:36:58 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:56:39 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	join_philo(t_info *info)
+{
+	int		i;
+	t_philo	*philo;
+
+	philo = malloc(sizeof(t_philo) * info->nb_philo);
+	if (!philo)
+		return ;
+	i = -1;
+	while (++i < info->nb_philo)
+		pthread_join(philo[i].thread, NULL);
+}
 
 void	ft_set_philo(t_philo *philos, t_info *info, pthread_mutex_t *print)
 {
