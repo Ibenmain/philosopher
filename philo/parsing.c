@@ -6,28 +6,11 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 11:54:12 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/07 12:03:34 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/08 00:07:39 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	ft_param(int ac, char **av, t_info *info)
-{
-	info->nb_philo = ft_atoi(av[1]);
-	info->t_eat = ft_atoi(av[2]);
-	info->t_sleep = ft_atoi(av[3]);
-	info->t_die = ft_atoi(av[4]);
-	if (ac == 6)
-	{
-		info->nb_eat = ft_atoi(av[5]);
-		if (info->nb_eat <= 0)
-			printf("Invalid arguments");
-	}
-	if (info->nb_philo <= 0 || info->t_eat <= 0
-		|| info->t_sleep <= 0 || info->t_die <= 0)
-		printf("Invalid arguments");
-}
 
 int	ft_cheak_error(char **av)
 {
@@ -47,4 +30,21 @@ int	ft_cheak_error(char **av)
 		i++;
 	}
 	return (0);
+}
+
+void	ft_param(int ac, char **av, t_info *info)
+{
+	info->nb_philo = ft_atoi(av[1]);
+	info->t_eat = ft_atoi(av[2]);
+	info->t_sleep = ft_atoi(av[3]);
+	info->t_die = ft_atoi(av[4]);
+	if (ac == 6)
+	{
+		info->nb_eat = ft_atoi(av[5]);
+		if (info->nb_eat <= 0)
+			printf("Invalid arguments");
+	}
+	if (info->nb_philo <= 0 || info->t_eat <= 0
+		|| info->t_sleep <= 0 || info->t_die <= 0)
+		printf("Invalid arguments");
 }

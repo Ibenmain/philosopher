@@ -6,21 +6,34 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 10:48:05 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/07 11:00:35 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/07 23:43:13 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
 int	ft_atoi(char *str)
 {
-	int		i;
-	size_t	rst;
+	int			i;
+	int			signe;
+	long int	nb;
 
-	i = -1;
-	rst = 0;
-	while (str[++i])
-		rst = rst * 10 + (str[i] - 48);
-	return (rst);
+	i = 0;
+	signe = 0;
+	nb = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-')
+		signe = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while ((str[i] != '\0') && (str[i] >= '0') && (str[i] <= '9'))
+	{
+		nb = nb * 10 + str[i] - '0';
+		i++;
+	}
+	if (signe == -1)
+		return (signe * nb);
+	else
+		return (nb);
 }
