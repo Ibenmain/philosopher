@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:47:18 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/08 21:44:02 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/09 16:28:05 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_info			info;
+	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 
@@ -22,7 +23,9 @@ int	main(int argc, char **argv)
 		return (printf("Invalid arguments"), 0);
 	ft_param(argc, argv, &info);
 	forks = ft_creat_fork(&info);
+	philo = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
+	if (!philo)
+		return (0);
 	pthread_mutex_init(&print, NULL);
-	ft_start_lunch(&info, forks, &print);
-	join_philo(&info);
+	ft_start_lunch(philo, &info, forks, &print);
 }

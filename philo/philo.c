@@ -6,22 +6,18 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 01:18:16 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/08 21:56:39 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/09 16:28:17 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	join_philo(t_info *info)
+void	join_philo(t_philo *philo)
 {
 	int		i;
-	t_philo	*philo;
 
-	philo = malloc(sizeof(t_philo) * info->nb_philo);
-	if (!philo)
-		return ;
 	i = -1;
-	while (++i < info->nb_philo)
+	while (++i < philo->info->nb_philo)
 		pthread_join(philo[i].thread, NULL);
 }
 
@@ -47,24 +43,21 @@ void	ft_set_philo(t_philo *philos, t_info *info, pthread_mutex_t *print)
 	}
 }
 
-int	ft_start_lunch(t_info *info, pthread_mutex_t *fork,
+void	ft_start_lunch(t_philo *philo, t_info *info, pthread_mutex_t *fork,
 			pthread_mutex_t *print)
 {
-	int				i;
-	t_philo			*philo;
+	int	i;
 
 	i = 0;
-	philo = malloc(sizeof(t_philo) * info->nb_philo);
-	if (!philo)
-		return (0);
 	ft_set_philo(philo, info, print);
 	while (i < info->nb_philo)
 	{
 		pthread_mutex_init(&philo[i].lunch, NULL);
 		ft_get_forks(&philo[i], i, fork, info->nb_philo);
-		if (pthread_create(&philo[i].thread, NULL, &routine, &philo[i]))
-			return (0);
+		if (pthread_create(&philo[i].thread, NULL, &routine, &philo[i]) == -1)
+			return ;
+		usleep(50);
 		i++;
 	}
-	return (1);
+	join_philo(philo);
 }
