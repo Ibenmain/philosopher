@@ -6,7 +6,8 @@ SRCS = 	main.c \
 		forks.c\
 		philo.c\
 		routine.c\
-		time.c
+		time.c\
+		death.c
 
 OBJS = $(SRCS:.c=.o)
 CFLAGS = -Wall -Wextra -Werror

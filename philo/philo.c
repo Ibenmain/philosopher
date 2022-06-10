@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 01:18:16 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/09 16:28:17 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/10 19:39:57 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	join_philo(t_philo *philo)
 
 	i = -1;
 	while (++i < philo->info->nb_philo)
-		pthread_join(philo[i].thread, NULL);
+		if (pthread_join(philo[i].thread, NULL))
+			return ;
 }
 
 void	ft_set_philo(t_philo *philos, t_info *info, pthread_mutex_t *print)
@@ -59,5 +60,5 @@ void	ft_start_lunch(t_philo *philo, t_info *info, pthread_mutex_t *fork,
 		usleep(50);
 		i++;
 	}
-	join_philo(philo);
+	ft_check_death(info, philo, fork);
 }
