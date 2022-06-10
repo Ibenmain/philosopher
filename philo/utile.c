@@ -6,11 +6,21 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 10:48:05 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/07 23:43:13 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/10 23:48:14 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	destroy_forks(pthread_mutex_t *forks, t_info *utils)
+{
+	int	i;
+
+	i = 0;
+	while (i < utils->nb_philo)
+		pthread_mutex_destroy(&forks[i++]);
+	free(forks);
+}
 
 int	ft_atoi(char *str)
 {

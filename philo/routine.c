@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 03:21:50 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/09 16:04:46 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/10 23:16:26 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2)
 		ft_sleep(2);
-	while (1)
+	while (*philo->finish == 0)
 	{
 		if (!ft_take_forks(philo, philo->l_fork, philo->r_fork))
 			break ;

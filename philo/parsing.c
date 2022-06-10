@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 11:54:12 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/10 19:03:51 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/11 00:41:28 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	ft_check_error(char **av)
 void	ft_param(int ac, char **av, t_info *info)
 {
 	info->nb_philo = ft_atoi(av[1]);
-	info->t_eat = ft_atoi(av[2]);
-	info->t_sleep = ft_atoi(av[3]);
-	info->t_die = ft_atoi(av[4]);
+	info->t_die = ft_atoi(av[2]);
+	info->t_eat = ft_atoi(av[3]);
+	info->t_sleep = ft_atoi(av[4]);
 	if (ac == 6)
 	{
 		info->nb_eat = ft_atoi(av[5]);
