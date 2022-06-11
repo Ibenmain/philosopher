@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 18:48:23 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/11 17:15:42 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:59:49 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_check_philo(t_philo *philos, t_info *info)
 	{
 		ft_sleep(3);
 		check_death(philos, info->nb_philo);
-		if (*philos->finish == 0
+		if (*philos->finish == 0 && info->nb_eat > 0
 			&& check_meals(philos, info->nb_philo, info->nb_eat))
 		{
 			*philos->finish = 1;
@@ -82,23 +82,4 @@ void	ft_check_philo(t_philo *philos, t_info *info)
 			printf("Everyone ate well\n");
 		}
 	}
-}
-
-int	watch_threads(t_info *info, t_philo *philos, unsigned int nb_philos,
-			pthread_mutex_t *forks)
-{
-	size_t	i;
-
-	i = 0;
-	ft_check_philo(philos, info);
-	while (i < nb_philos)
-	{
-		if (i == 0 && *philos->finish == 1)
-			unlock_forks(forks, nb_philos);
-		if (pthread_join(philos[i].thread, NULL))
-			return (1);
-		i++;
-	}
-	free(philos);
-	return (0);
 }
