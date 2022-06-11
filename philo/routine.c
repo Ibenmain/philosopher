@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 03:21:50 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/10 23:16:26 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:44:22 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void	*routine(void *arg)
 		if (!ft_fall_asleep(philo))
 			break ;
 	}
+	pthread_mutex_destroy(&philo->lunch);
 	return (NULL);
 }
