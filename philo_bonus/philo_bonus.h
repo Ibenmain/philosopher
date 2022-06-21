@@ -5,19 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/20 09:54:41 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/21 13:26:12 by ibenmain         ###   ########.fr       */
+/*   Created: 2022/04/07 14:49:30 by aanjaimi          #+#    #+#             */
+/*   Updated: 2022/06/21 22:55:37 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
-# include <stdio.h>
-# include <stdbool.h>
+
 # include <unistd.h>
-# include <string.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <string.h>
+# include <stdio.h>
 # include <sys/time.h>
 # include <stdbool.h>
 # include <semaphore.h>
@@ -27,51 +27,60 @@
 # include <fcntl.h>
 # include <signal.h>
 
+# define LEFT 0
+# define RIGHT 1
+# define IS_DEAD 0
+# define ATE_ENOUGH 1
+# define ERR 2
+
 typedef struct s_info
 {
-	int	nb_philo;
-	int	t_eat;
-	int	t_sleep;
-	int	t_die;
-	int	nb_eat;
+	unsigned int	nb_philo;
+	unsigned int	t_die;
+	unsigned int	t_eat;
+	unsigned int	t_sleep;
+	long			nb_eat;
 }	t_info;
 
 typedef struct s_philo
 {
-	t_info			*info;
 	size_t			id;
-	size_t			last_meal;
 	long			nb_meals;
-	sem_t			*fork;
+	bool			*stop;
+	t_info			*utils;
+	sem_t			*forks;
 	sem_t			*print;
+	sem_t			*lunch;
 	sem_t			*sync;
+	char			*lunch_name;
+	size_t			last_meal;
 	struct timeval	ts;
 	int				pid;
-	char			*lunch_name;
-	sem_t			*lunch;
-	int				finish;
 }	t_philo;
 
-int				ft_atoi(char *str);
-char			*ft_itoa(int n);
-char			*ft_strjoin(char const *s1, char const *s2);
-int				ft_check_error(char **av);
-int				ft_eat(t_philo *philo);
-void			ft_param(int ac, char **av, t_info *info);
-void			ft_print_msg(char *str);
-sem_t			*ft_sem_init(char *name, unsigned int val);
-int				launch_children(t_philo *philo, t_info *info, sem_t *forks, sem_t *print);
-void			ft_set_philo(t_philo *philos, t_info *info, sem_t *forks, sem_t *print);
-unsigned long	ft_get_ts(struct timeval ts);
-size_t			ft_get_time(void);
+int				main(int argc, char **argv);
+void			unlock_sync(sem_t *sync, unsigned int nb_philos);
+size_t			get_time(void);
 void			ft_sleep(size_t ms);
-void			*routine(void *arg);
-int				ft_eat(t_philo *philo);
-int				ft_fall_asleep(t_philo *philo);
-int				ft_take_forks(t_philo *philo);
-void			ft_print_msg(char *str);
-void			ft_print(t_philo *philo, char *str);
-int				is_dead(t_philo *philo);
-void			ft_unlock_sync(sem_t *sync, unsigned int nb_philos);
+void			kill_children(t_philo *philos, unsigned int nb_philos);
 int				watch_children(t_philo *philos, unsigned int nb_philos);
+void			process(t_philo *philo);
+int				set_philos(t_philo *philos, t_info *utils, sem_t *print);
+int				launch_children(t_info *utils, sem_t *print);
+int				take_forks(t_philo *philo);
+sem_t			*init_forks(t_info *utils);
+unsigned long	get_ts(struct timeval ts);
+int				is_dead(t_philo *philo);
+int				fall_asleep(t_philo *philo);
+int				eat(t_philo *philo);
+void			*live(void *arg);
+char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_itoa(int n);
+bool			check_args(int ac, char **av, t_info *utils);
+int				ft_strlen(const char *str);
+void			ft_param(int ac, char **av, t_info *info);
+int				ft_check_error(char **av);
+int				ft_atoi(char *str);
+sem_t			*ft_sem_init(char *name, unsigned int val);
+void			ft_print(t_philo *philo, char *str);
 #endif

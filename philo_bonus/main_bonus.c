@@ -5,31 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/07 09:47:18 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/21 13:01:42 by ibenmain         ###   ########.fr       */
+/*   Created: 2022/04/07 14:49:16 by aanjaimi          #+#    #+#             */
+/*   Updated: 2022/06/21 22:30:05 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	main(int argc, char **argv)
+sem_t	*ft_sem_init(char *name, unsigned int val)
 {
-	t_info			*info;
-	t_philo			*philo;
-	sem_t			*print;
-	sem_t			*forks;
+	sem_t	*semaphor;
 
-	if ((argc != 5 && argc != 6) || ft_check_error(argv))
-		return (printf("Invalid arguments"), 0);
-	philo = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
-	info = malloc(sizeof(t_info) * ft_atoi(argv[1]));
-	if (!philo || !info)
+	sem_unlink(name);
+	semaphor = sem_open(name, O_CREAT, 0777, val);
+	if (semaphor != SEM_FAILED)
+		return (semaphor);
+	sem_unlink(name);
+	return (sem_open(name, O_CREAT, 0777, val));
+}
+
+int	main(int ac, char **av)
+{
+	t_info			info;
+	sem_t			*print;
+	int				ret;
+
+	if (ac < 5 || ac > 6 || !check_args(ac, av, &info))
+	{
+		write(2, "Wrong arguments\n", 16);
+		return (1);
+	}
+	if (!info.nb_eat)
+	{
+		printf("Everyone ate well, even though no one ate\n");
 		return (0);
-	ft_param(argc, argv, info);
-	forks = ft_sem_init("forks", info->nb_philo);
+	}
+	ret = 1;
+	sem_unlink("print");
 	print = ft_sem_init("print", 1);
-	launch_children(philo, info, forks, print);
+	if (!launch_children(&info, print))
+		ret = 0;
 	sem_close(print);
 	sem_unlink("print");
-	return (0);
+	return (ret);
 }
