@@ -3,6 +3,7 @@
         "philo.h": "c",
         "unistd.h": "c",
         "__locale": "c",
-        "locale": "c"
+        "locale": "c",
+        "stdbool.h": "c"
     }
 }

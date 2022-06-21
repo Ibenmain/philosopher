@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:47:18 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/20 14:14:53 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/21 13:01:42 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int	main(int argc, char **argv)
 	forks = ft_sem_init("forks", info->nb_philo);
 	print = ft_sem_init("print", 1);
 	launch_children(philo, info, forks, print);
+	sem_close(print);
+	sem_unlink("print");
 	return (0);
 }

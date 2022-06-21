@@ -6,7 +6,7 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 09:54:41 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/20 14:15:15 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/21 13:26:12 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,13 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <stdbool.h>
 # include <semaphore.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <fcntl.h>
+# include <signal.h>
 
 typedef struct s_info
 {
@@ -38,6 +44,7 @@ typedef struct s_philo
 	long			nb_meals;
 	sem_t			*fork;
 	sem_t			*print;
+	sem_t			*sync;
 	struct timeval	ts;
 	int				pid;
 	char			*lunch_name;
@@ -64,4 +71,7 @@ int				ft_fall_asleep(t_philo *philo);
 int				ft_take_forks(t_philo *philo);
 void			ft_print_msg(char *str);
 void			ft_print(t_philo *philo, char *str);
+int				is_dead(t_philo *philo);
+void			ft_unlock_sync(sem_t *sync, unsigned int nb_philos);
+int				watch_children(t_philo *philos, unsigned int nb_philos);
 #endif

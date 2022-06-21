@@ -1,6 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/ibenmain/Desktop/philosopher'
- 
 make: Leaving directory `/Users/ibenmain/Desktop/philosopher'
  
 make: *** No targets specified and no makefile found.  Stop.
