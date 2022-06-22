@@ -6,10 +6,9 @@
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 22:02:05 by ibenmain          #+#    #+#             */
-/*   Updated: 2022/06/21 22:17:32 by ibenmain         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:15:04 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "philo_bonus.h"
 
@@ -33,7 +32,7 @@ int	ft_strlen(const char *str)
 	return (i);
 }
 
-bool	only_numbers(char *str)
+int	only_numbers(char *str)
 {
 	size_t	i;
 
@@ -41,10 +40,10 @@ bool	only_numbers(char *str)
 	while (str[i])
 	{
 		if (str[i] < 48 || str[i] > 57)
-			return (false);
+			return (0);
 		i++;
 	}
-	return (true);
+	return (1);
 }
 
 unsigned int	pars_nbr(char *str)
@@ -63,7 +62,7 @@ unsigned int	pars_nbr(char *str)
 	return (nbr);
 }
 
-bool	check_args(int argc, char **argv, t_info *pars)
+int	check_args(int argc, char **argv, t_info *pars)
 {
 	int	i;
 
@@ -73,7 +72,7 @@ bool	check_args(int argc, char **argv, t_info *pars)
 		if (ft_strlen(argv[i]) > 11 || !only_numbers(argv[i])
 			|| (ft_strlen(argv[i]) == 11
 				&& ft_strcmp(argv[i], "42949667295") > 0))
-			return (false);
+			return (0);
 		i++;
 	}
 	pars->nb_philo = pars_nbr(argv[1]);
@@ -85,6 +84,6 @@ bool	check_args(int argc, char **argv, t_info *pars)
 	else
 		pars->nb_eat = -1;
 	if (!pars->nb_philo)
-		return (false);
-	return (true);
+		return (0);
+	return (1);
 }

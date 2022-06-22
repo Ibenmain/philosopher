@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 15:00:35 by aanjaimi          #+#    #+#             */
-/*   Updated: 2022/06/21 22:53:04 by ibenmain         ###   ########.fr       */
+/*   Created: 2022/06/22 16:17:07 by ibenmain          #+#    #+#             */
+/*   Updated: 2022/06/22 16:17:11 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	ft_print(t_philo *philo, char *str)
 
 int	is_dead(t_philo *philo)
 {
-	if (*philo->stop == true)
+	if (*philo->stop == 1)
 		return (1);
 	sem_wait(philo->lunch);
-	if (get_time() - philo->last_meal >= philo->utils->t_die)
+	if (get_time() - philo->last_meal >= philo->info->t_die)
 	{
 		sem_post(philo->lunch);
-		if (*philo->stop == false)
+		if (*philo->stop == 0)
 		{
-			*philo->stop = true;
+			*philo->stop = 1;
 			sem_wait(philo->print);
 			printf("%lums %zu died\n", get_ts(philo->ts), philo->id);
 		}
@@ -41,11 +41,11 @@ int	is_dead(t_philo *philo)
 
 int	fall_asleep(t_philo *philo)
 {
-	if (*philo->stop == true)
+	if (*philo->stop == 1)
 		return (0);
 	ft_print(philo, "is sleeping");
-	ft_sleep(philo->utils->t_sleep);
-	if (*philo->stop == true)
+	ft_sleep(philo->info->t_sleep);
+	if (*philo->stop == 1)
 		return (0);
 	ft_print(philo, "is thinking");
 	return (1);
@@ -57,23 +57,23 @@ int	eat(t_philo *philo)
 	philo->last_meal = get_time();
 	ft_print(philo, "is eating");
 	sem_post(philo->lunch);
-	ft_sleep(philo->utils->t_eat);
+	ft_sleep(philo->info->t_eat);
 	philo->nb_meals += 1;
 	sem_post(philo->forks);
 	sem_post(philo->forks);
-	if (*philo->stop == true)
+	if (*philo->stop == 1)
 		return (0);
 	return (1);
 }
 
-void	*live(void *arg)
+void	*routine(void *arg)
 {
 	t_philo			*philo;
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2)
 		ft_sleep(2);
-	while (*philo->stop == false)
+	while (*philo->stop == 0)
 	{
 		if (!take_forks(philo))
 			break ;
@@ -81,6 +81,6 @@ void	*live(void *arg)
 			break ;
 		if (!fall_asleep(philo))
 			break ;
-	}  
+	}
 	return (NULL);
 }

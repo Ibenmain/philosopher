@@ -1,4 +1,4 @@
-NAME = philo
+ NAME = philo
 INC  = philo.h
 SRCS = 	main.c \
 		parsing.c\

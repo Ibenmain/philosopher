@@ -5,38 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 15:00:16 by aanjaimi          #+#    #+#             */
-/*   Updated: 2022/06/21 22:14:35 by ibenmain         ###   ########.fr       */
+/*   Created: 2022/06/22 16:15:17 by ibenmain          #+#    #+#             */
+/*   Updated: 2022/06/22 16:15:21 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "philo_bonus.h"
-
-int	ft_atoi(char *str)
-{
-	int			i;
-	int			signe;
-	long int	nb;
-
-	i = 0;
-	signe = 0;
-	nb = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '-')
-		signe = -1;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while ((str[i] != '\0') && (str[i] >= '0') && (str[i] <= '9'))
-	{
-		nb = nb * 10 + str[i] - '0';
-		i++;
-	}
-	if (signe == -1)
-		return (signe * nb);
-	else
-		return (nb);
-}
 
 static unsigned int	get_len(unsigned int nb, unsigned int *pow)
 {

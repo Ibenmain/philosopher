@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/07 14:49:30 by aanjaimi          #+#    #+#             */
-/*   Updated: 2022/06/21 22:55:37 by ibenmain         ###   ########.fr       */
+/*   Created: 2022/06/22 16:17:50 by ibenmain          #+#    #+#             */
+/*   Updated: 2022/06/22 16:17:54 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_philo
 {
 	size_t			id;
 	long			nb_meals;
-	bool			*stop;
-	t_info			*utils;
+	int				*stop;
+	t_info			*info;
 	sem_t			*forks;
 	sem_t			*print;
 	sem_t			*lunch;
@@ -73,10 +73,10 @@ unsigned long	get_ts(struct timeval ts);
 int				is_dead(t_philo *philo);
 int				fall_asleep(t_philo *philo);
 int				eat(t_philo *philo);
-void			*live(void *arg);
+void			*routine(void *arg);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_itoa(int n);
-bool			check_args(int ac, char **av, t_info *utils);
+int				check_args(int ac, char **av, t_info *utils);
 int				ft_strlen(const char *str);
 void			ft_param(int ac, char **av, t_info *info);
 int				ft_check_error(char **av);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenmain <ibenmain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 14:59:59 by aanjaimi          #+#    #+#             */
-/*   Updated: 2022/06/21 22:52:34 by ibenmain         ###   ########.fr       */
+/*   Created: 2022/06/22 16:14:45 by ibenmain          #+#    #+#             */
+/*   Updated: 2022/06/22 16:15:40 by ibenmain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ int	watch_children(t_philo *philos, unsigned int nb_philos)
 	int		status;
 
 	nb_full = 0;
-	while (philos->utils->nb_eat > 0 && nb_full != nb_philos)
+	while (philos->info->nb_eat > 0 && nb_full != nb_philos)
 	{
 		waitpid(-1, &status, 0);
 		if (WEXITSTATUS(status) != ATE_ENOUGH)
 			break ;
 		nb_full++;
 	}
-	if (philos->utils->nb_eat < 0)
+	if (philos->info->nb_eat < 0)
 		waitpid(-1, &status, 0);
 	kill_children(philos, nb_philos);
-	if (philos->utils->nb_eat && nb_full == nb_philos)
+	if (philos->info->nb_eat && nb_full == nb_philos)
 		printf("Everyone ate well\n");
 	sem_close(philos->forks);
 	sem_unlink("forks");
@@ -62,40 +62,40 @@ int	watch_children(t_philo *philos, unsigned int nb_philos)
 void	process(t_philo *philo)
 {
 	pthread_t	thread;
-	bool		stop;
+	int			stop;
 
-	stop = false;
+	stop = 0;
 	philo->stop = &stop;
 	sem_wait(philo->sync);
 	philo->last_meal = get_time();
-	if (pthread_create(&thread, NULL, &live, philo)
-		|| pthread_detach(thread))
+	if (pthread_create(&thread, NULL, &routine, philo)
+		|| pthread_join(thread, NULL))
 		exit(ERR);
 	while (1)
 	{
 		ft_sleep(4);
 		if (is_dead(philo))
-			exit(IS_DEAD);
-		else if (philo->utils->nb_eat > 0
-			&& philo->nb_meals >= philo->utils->nb_eat)
-			exit(ATE_ENOUGH);
-	}	
+			exit(0);
+		else if (philo->info->nb_eat > 0
+			&& philo->nb_meals >= philo->info->nb_eat)
+			exit(1);
+	}
 }
 
-int	set_philos(t_philo *philos, t_info *utils, sem_t *print)
+int	set_philos(t_philo *philos, t_info *info, sem_t *print)
 {
 	size_t	i;
 	sem_t	*forks;
 
 	i = 0;
-	forks = init_forks(utils);
+	forks = init_forks(info);
 	if (!forks)
 		return (0);
-	while (i < utils->nb_philo)
+	while (i < info->nb_philo)
 	{
 		philos[i].id = i + 1;
 		philos[i].nb_meals = 0;
-		philos[i].utils = utils;
+		philos[i].info = info;
 		philos[i].print = print;
 		philos[i].forks = forks;
 		philos[i].lunch_name = ft_strjoin("lunch_", ft_itoa(i));
@@ -105,7 +105,7 @@ int	set_philos(t_philo *philos, t_info *utils, sem_t *print)
 	return (1);
 }
 
-int	launch_children(t_info *utils, sem_t *print)
+int	launch_children(t_info *info, sem_t *print)
 {
 	t_philo			*philos;
 	size_t			i;
@@ -114,11 +114,11 @@ int	launch_children(t_info *utils, sem_t *print)
 
 	i = 0;
 	sync = ft_sem_init("sync", 0);
-	philos = malloc(sizeof(t_philo) * utils->nb_philo);
-	if (!philos || !set_philos(philos, utils, print))
+	philos = malloc(sizeof(t_philo) * info->nb_philo);
+	if (!philos || !set_philos(philos, info, print))
 		return (0);
 	gettimeofday(&time, NULL);
-	while (i < utils->nb_philo)
+	while (i < info->nb_philo)
 	{
 		philos[i].sync = sync;
 		philos[i].pid = fork();
@@ -129,6 +129,6 @@ int	launch_children(t_info *utils, sem_t *print)
 			return (0);
 		i++;
 	}
-	unlock_sync(sync, utils->nb_philo);
-	return (watch_children(philos, utils->nb_philo));
+	unlock_sync(sync, info->nb_philo);
+	return (watch_children(philos, info->nb_philo));
 }
