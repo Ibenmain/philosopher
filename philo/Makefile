@@ -17,15 +17,15 @@ RM = rm -rf
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $^
+	@$(CC) $(CFLAGS) -o $(NAME) $^
 
 %.o: %.c $(INC)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 fclean : clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re : fclean all

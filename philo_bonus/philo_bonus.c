@@ -69,17 +69,17 @@ void	process(t_philo *philo)
 	sem_wait(philo->sync);
 	philo->last_meal = get_time();
 	if (pthread_create(&thread, NULL, &routine, philo)
-		|| pthread_join(thread, NULL))
+		|| pthread_detach(thread))
 		exit(ERR);
 	while (1)
 	{
 		ft_sleep(4);
 		if (is_dead(philo))
-			exit(0);
+			exit(IS_DEAD);
 		else if (philo->info->nb_eat > 0
 			&& philo->nb_meals >= philo->info->nb_eat)
-			exit(1);
-	}
+			exit(ATE_ENOUGH);
+	}	
 }
 
 int	set_philos(t_philo *philos, t_info *info, sem_t *print)
@@ -110,19 +110,19 @@ int	launch_children(t_info *info, sem_t *print)
 	t_philo			*philos;
 	size_t			i;
 	sem_t			*sync;
-	struct timeval	time;
+	struct timeval	ts;
 
 	i = 0;
-	sync = ft_sem_init("sync", 0);
+	sync = sem_open("sync", O_CREAT, S_IRWXU | S_IRWXG, 0);
 	philos = malloc(sizeof(t_philo) * info->nb_philo);
 	if (!philos || !set_philos(philos, info, print))
 		return (0);
-	gettimeofday(&time, NULL);
+	gettimeofday(&ts, NULL);
 	while (i < info->nb_philo)
 	{
 		philos[i].sync = sync;
 		philos[i].pid = fork();
-		philos[i].ts = time;
+		philos[i].ts = ts;
 		if (!philos[i].pid)
 			process(&philos[i]);
 		else if (philos[i].pid < 0)

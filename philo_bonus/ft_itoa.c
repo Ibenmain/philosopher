@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "philo_bonus.h"
 
 static unsigned int	get_len(unsigned int nb, unsigned int *pow)
