@@ -2,10 +2,10 @@ NAME = philo_bonus
 INC = philo_bonus.h
 COMP_LINUX = -lpthread
 SRCS_B = main_bonus.c \
-		check.c \
+		check_bonus.c \
 		ft_itoa.c \
 		ft_strjoin.c \
-		utils.c \
+		utils_bonus.c \
 		philo_bonus.c \
 		lifetime_bonus.c \
 		forks_bonus.c

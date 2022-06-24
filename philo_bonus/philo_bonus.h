@@ -27,9 +27,7 @@
 # include <fcntl.h>
 # include <signal.h>
 
-# define LEFT 0
-# define RIGHT 1
-# define IS_DEAD 0
+# define IS_DEAD 0 
 # define ATE_ENOUGH 1
 # define ERR 2
 
@@ -80,7 +78,6 @@ int				check_args(int ac, char **av, t_info *utils);
 int				ft_strlen(const char *str);
 void			ft_param(int ac, char **av, t_info *info);
 int				ft_check_error(char **av);
-int				ft_atoi(char *str);
 sem_t			*ft_sem_init(char *name, unsigned int val);
 void			ft_print(t_philo *philo, char *str);
 #endif
